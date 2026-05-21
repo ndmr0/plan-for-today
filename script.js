@@ -494,6 +494,8 @@ function createIcon(name) {
     check: ["M20 6 9 17l-5-5"],
     clock: ["M12 7v5l3 2", "M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"],
     edit: ["M12 20h9", "M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"],
+    hourglass: ["M6 3h12", "M6 21h12", "M7 3c0 5 3.5 6 5 9-1.5 3-5 4-5 9", "M17 3c0 5-3.5 6-5 9 1.5 3 5 4 5 9"],
+    refresh: ["M3 12a9 9 0 0 1 15.1-6.6L21 8", "M21 3v5h-5", "M21 12a9 9 0 0 1-15.1 6.6L3 16", "M3 21v-5h5"],
     trash: ["M3 6h18", "M8 6V4h8v2", "M6 6l1 15h10l1-15", "M10 11v6", "M14 11v6"],
   };
 
@@ -655,6 +657,7 @@ function createStatusMark(status) {
   const mark = document.createElement("span");
   mark.className = `status-mark status-mark-${status}`;
   mark.setAttribute("aria-hidden", "true");
+  if (status === "progress") mark.textContent = "–";
   if (status === "done") mark.textContent = "✓";
   return mark;
 }
@@ -738,8 +741,7 @@ function createSchedulePanel(task) {
   const clearButton = document.createElement("button");
   clearButton.className = "time-button clear-time-action";
   clearButton.type = "button";
-  clearButton.textContent = "Clear time";
-  clearButton.disabled = !task.startTime && !task.endTime;
+  clearButton.append(createIcon("refresh"), document.createTextNode("Clear time"));
   clearButton.addEventListener("click", () => updateTask(task.id, { startTime: "", endTime: "" }));
 
   const fields = document.createElement("div");
@@ -747,14 +749,12 @@ function createSchedulePanel(task) {
 
   const startColumn = document.createElement("div");
   startColumn.className = "schedule-column start-column";
-  const startPresets = createChipGroup("Start options", "schedule-presets");
+  const startPresets = createChipGroup("Quick start", "schedule-presets");
 
   [
     { label: "Now", getStart: getDefaultStartTime },
     { label: "In 15m", getStart: () => getRelativeStartTime(15) },
     { label: "In 30m", getStart: () => getRelativeStartTime(30) },
-    { label: "In 1h", getStart: () => getRelativeStartTime(60) },
-    { label: "In 2h", getStart: () => getRelativeStartTime(120) },
     { label: "Noon", getStart: () => "12:00" },
     { label: "5 PM", getStart: () => "17:00" },
   ].forEach((preset) => {
@@ -772,9 +772,8 @@ function createSchedulePanel(task) {
 
   const endColumn = document.createElement("div");
   endColumn.className = "schedule-column end-column";
-  const durations = createChipGroup("Duration", "duration-presets");
+  const durations = createChipGroup("Quick duration", "duration-presets");
   [
-    { label: "5m", minutes: 5 },
     { label: "15m", minutes: 15 },
     { label: "30m", minutes: 30 },
     { label: "1h", minutes: 60 },
@@ -820,7 +819,10 @@ function createTimeStepper(label, task, field) {
 
   const text = document.createElement("span");
   text.className = "field-label";
-  text.textContent = label;
+  text.append(
+    createIcon(label === "Start" ? "clock" : "hourglass"),
+    document.createTextNode(label === "Start" ? "Start" : "End / Duration")
+  );
 
   const controls = document.createElement("div");
   controls.className = "time-stepper";
@@ -835,7 +837,9 @@ function createTimeStepper(label, task, field) {
   const display = document.createElement("button");
   display.className = `time-display ${task[field] ? "" : "empty"}`;
   display.type = "button";
-  display.textContent = task[field] ? formatTime(getDateWithTime(task[field])) : "Set";
+  display.textContent = task[field]
+    ? formatTime(getDateWithTime(task[field]))
+    : `Set ${label.toLowerCase()} time`;
   display.setAttribute("aria-label", task[field] ? `${label} time ${display.textContent}` : `Set ${label.toLowerCase()} time`);
   display.addEventListener("click", () => ensureTaskTime(task.id, field));
 
@@ -858,7 +862,7 @@ function createDeletePanel(task) {
   const deleteButton = document.createElement("button");
   deleteButton.className = "task-delete-action";
   deleteButton.type = "button";
-  deleteButton.textContent = "Delete task";
+  deleteButton.append(createIcon("trash"), document.createTextNode("Delete task"));
   deleteButton.setAttribute("aria-label", `Delete ${task.title}`);
   deleteButton.addEventListener("click", () => requestDeleteTask(task.id));
 
