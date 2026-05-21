@@ -183,10 +183,10 @@ button:disabled {
   align-items: center;
   justify-content: flex-end;
   flex-wrap: wrap;
-  gap: 9px;
+  gap: 10px;
   font-size: 0.94rem;
   font-weight: 760;
-  padding: 8px 12px;
+  padding: 7px 8px 7px 12px;
   border: 1px solid rgba(138, 80, 196, 0.18);
   border-radius: var(--radius);
   background: rgba(255, 255, 255, 0.72);
@@ -199,10 +199,23 @@ button:disabled {
 }
 
 .clock-time {
-  min-width: 70px;
-  color: var(--brand-strong);
+  display: inline-grid;
+  place-items: center;
+  min-width: 96px;
+  min-height: 34px;
+  padding: 0 11px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 7px;
+  background:
+    linear-gradient(180deg, #9d5ee0 0%, var(--brand) 58%, var(--brand-strong) 100%);
+  color: #fff;
+  box-shadow:
+    0 9px 18px rgba(111, 53, 170, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.26);
   font-variant-numeric: tabular-nums;
-  text-align: right;
+  font-weight: 900;
+  line-height: 1;
+  text-align: center;
 }
 
 .greeting-row {
@@ -1929,8 +1942,8 @@ button:focus-visible {
   }
 
   .clock-time {
-    width: 100%;
-    min-width: 0;
+    width: auto;
+    min-width: 106px;
     font-size: 1rem;
     text-align: center;
   }
