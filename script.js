@@ -571,6 +571,11 @@ function createTaskCard(task) {
 
   const titleArea = document.createElement("div");
   titleArea.className = "task-title-area";
+  titleArea.title = "Open task details";
+  titleArea.addEventListener("click", (event) => {
+    if (event.target.closest("button")) return;
+    toggleExpanded(task.id);
+  });
 
   const titleButton = document.createElement("button");
   titleButton.className = "task-title-button";

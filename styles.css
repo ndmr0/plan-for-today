@@ -651,6 +651,12 @@ button:disabled {
   align-items: center;
   flex-wrap: wrap;
   gap: 8px;
+  cursor: pointer;
+}
+
+.task-title-area:hover .status-pill,
+.task-title-area:hover .timer-pill {
+  box-shadow: 0 5px 14px rgba(138, 80, 196, 0.1);
 }
 
 .task-title-button {
