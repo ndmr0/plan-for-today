@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#8a50c4">
+    <title>Plan for Today</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="hero">
+        <div class="brand-block">
+          <a class="brand-mark" href="./" aria-label="Plan for Today home">
+            <span class="logo-stack" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+            <span>Plan for Today</span>
+          </a>
+          <p class="tagline">Start simple. Stay clear.</p>
+        </div>
+
+        <div class="hero-meta">
+          <p class="date-line" id="dateLine">
+            <span id="todayDate"></span>
+            <span class="date-divider" aria-hidden="true"></span>
+            <span class="clock-time" id="clockTime"></span>
+          </p>
+          <div class="greeting-row">
+            <button class="icon-button greeting-edit" id="editGreeting" type="button" aria-label="Edit greeting name" title="Edit greeting">
+              <svg class="app-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M12 20h9"></path>
+                <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"></path>
+              </svg>
+            </button>
+            <div>
+              <p class="eyebrow">Today</p>
+              <h1 id="greetingText">Hi, <span id="greetingNameText">hard worker</span> <span aria-hidden="true">👋</span></h1>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="main-grid">
+        <section class="workspace" aria-labelledby="planTitle">
+          <div class="toolbar">
+            <div>
+              <p class="eyebrow">Your stack</p>
+              <h2 id="planTitle">Build momentum today</h2>
+            </div>
+            <div class="toolbar-actions">
+              <button class="ghost-button" id="clearTasks" type="button" hidden>Clear today</button>
+              <button class="primary-button" id="openAddTask" type="button">
+                <svg class="app-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M12 5v14"></path>
+                  <path d="M5 12h14"></path>
+                </svg>
+                Add
+              </button>
+            </div>
+          </div>
+
+          <div class="rollover-banner" id="rolloverBanner" hidden>
+            <div>
+              <strong>A new day is here.</strong>
+              <span>Start fresh when you're ready.</span>
+            </div>
+            <button class="primary-button compact" id="startNewDay" type="button">Start fresh</button>
+          </div>
+
+          <div class="storage-warning" id="storageWarning" hidden>
+            <strong>Storage is unavailable.</strong>
+            <span>Your plan may not survive a refresh in this browser mode.</span>
+          </div>
+
+          <div class="sync-banner" id="syncBanner" hidden>
+            <div>
+              <strong>Plan changed in another tab.</strong>
+              <span>Apply the latest saved version when you're ready.</span>
+            </div>
+            <button class="primary-button compact" id="applyExternalChanges" type="button">Apply update</button>
+          </div>
+
+          <div class="sr-only" id="liveRegion" role="status" aria-live="polite" aria-atomic="true"></div>
+
+          <div class="task-list-panel">
+            <div class="progress-summary" id="progressPanel" hidden>
+              <div class="progress-topline">
+                <div>
+                  <p class="progress-kicker">Daily progress</p>
+                  <p class="progress-meta" id="progressMeta">0 of 0 tasks complete</p>
+                </div>
+                <strong class="progress-percent" id="progressPercent">0%</strong>
+              </div>
+              <div class="progress-track" id="progressTrack" role="progressbar" aria-label="Daily task progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="0% complete">
+                <span class="progress-fill" id="progressFill"></span>
+              </div>
+            </div>
+            <div class="task-list" id="taskList"></div>
+
+            <div class="empty-state" id="emptyState" role="button" tabindex="0" aria-label="Add your first task">
+              <div class="empty-stack" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <h2>Start with one clear task.</h2>
+              <p>Add your first win and let today take shape.</p>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <dialog class="modal batch-modal" id="taskModal" aria-labelledby="taskModalTitle" aria-modal="true">
+      <form id="taskForm">
+        <div class="modal-header">
+          <div>
+            <h2 id="taskModalTitle">Add tasks</h2>
+            <p class="modal-kicker">Capture the morning stack, then arrange the new tasks before you start.</p>
+          </div>
+          <button class="icon-button" id="closeTaskModal" type="button" aria-label="Close add task" title="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+
+        <div class="sync-banner compact-sync" id="modalSyncBanner" hidden>
+          <div>
+            <strong>Plan changed in another tab.</strong>
+            <span>Apply the latest saved version when you're ready.</span>
+          </div>
+          <button class="primary-button compact" id="applyExternalChangesModal" type="button">Apply update</button>
+        </div>
+
+        <div class="batch-entry">
+          <label class="field">
+            <span>Task</span>
+            <input id="taskTitleInput" type="text" autocomplete="off" maxlength="120" placeholder="Exercise" aria-describedby="taskLimit taskFormError">
+          </label>
+          <button class="primary-button" type="submit">Add</button>
+        </div>
+
+        <p class="form-error" id="taskFormError" role="alert"></p>
+        <p class="input-meta" id="taskLimit"><span id="taskCharCount">0/120</span> characters. Saved as you add.</p>
+
+        <section class="batch-list-section" aria-labelledby="batchListTitle">
+          <div class="batch-list-header">
+            <div>
+              <p class="eyebrow">Just added</p>
+              <h3 id="batchListTitle">This batch</h3>
+            </div>
+            <div class="batch-header-meta">
+              <span class="saved-cue">Saved as you add</span>
+              <span class="batch-count" id="batchCount">0 tasks</span>
+            </div>
+          </div>
+          <div class="batch-list" id="batchTaskList"></div>
+          <p class="batch-empty" id="batchEmpty">New tasks will collect here as you add them.</p>
+        </section>
+
+        <div class="modal-actions">
+          <button class="ghost-button" id="cancelTask" type="button">Close</button>
+          <button class="primary-button" id="readyForToday" type="button">Ready for today</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog class="modal confirm-modal" id="confirmModal" aria-labelledby="confirmTitle" aria-modal="true">
+      <form id="confirmForm" method="dialog">
+        <div class="modal-header">
+          <h2 id="confirmTitle">Clear today?</h2>
+          <button class="icon-button" id="closeConfirmModal" type="button" aria-label="Close confirmation" title="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <p id="confirmMessage">This removes every task in today's stack.</p>
+        <div class="modal-actions">
+          <button class="ghost-button" id="cancelConfirm" type="button">Cancel</button>
+          <button class="danger-button" id="confirmAction" type="submit">Clear</button>
+        </div>
+      </form>
+    </dialog>
+
+    <div class="undo-toast" id="undoToast" hidden>
+      <span id="undoMessage">Task deleted.</span>
+      <button class="ghost-button compact-toast-button" id="undoDelete" type="button">Undo</button>
+    </div>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>
