@@ -499,6 +499,7 @@ button:disabled {
 .progress-track {
   position: relative;
   overflow: hidden;
+  width: 100%;
   height: 11px;
   border: 1px solid rgba(138, 80, 196, 0.12);
   border-radius: 999px;
@@ -1610,25 +1611,143 @@ button:focus-visible {
   margin-left: auto;
 }
 
+@media (min-width: 761px) and (max-width: 920px) {
+  .app-shell {
+    width: min(720px, calc(100% - 36px));
+    padding-top: 24px;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 20px;
+    padding-bottom: 28px;
+    text-align: center;
+  }
+
+  .brand-block {
+    justify-items: center;
+  }
+
+  .brand-mark {
+    justify-content: center;
+  }
+
+  .tagline {
+    max-width: 34ch;
+  }
+
+  .hero-meta {
+    width: 100%;
+    min-width: 0;
+    justify-items: center;
+  }
+
+  .date-line {
+    justify-content: center;
+  }
+
+  .greeting-row {
+    justify-content: center;
+  }
+
+  .greeting-row h1 {
+    text-align: center;
+  }
+
+  .toolbar {
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    text-align: center;
+  }
+
+  .toolbar h2 {
+    font-size: clamp(1.55rem, 4vw, 2.05rem);
+  }
+
+  .toolbar-actions {
+    justify-content: center;
+    width: min(100%, 380px);
+    margin-inline: auto;
+  }
+
+  .toolbar-actions > * {
+    flex: 1 1 150px;
+    max-width: 180px;
+  }
+
+  .task-list-panel {
+    border-radius: 20px;
+  }
+
+  .progress-summary {
+    padding: 18px 22px 16px;
+  }
+
+  .task-list {
+    padding: 0 18px;
+  }
+
+  .task-row,
+  .inline-add-row {
+    min-height: 58px;
+  }
+
+  .task-details {
+    justify-items: center;
+    padding: 22px;
+  }
+
+  .task-details > * {
+    width: min(100%, 560px);
+  }
+
+  .schedule-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .editor-actions {
+    width: min(100%, 560px);
+  }
+}
+
 @media (max-width: 760px) {
   .app-shell {
-    width: min(820px, calc(100% - 22px));
+    width: min(640px, calc(100% - 22px));
     padding-top: 18px;
   }
 
   .hero {
     grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 18px;
     padding-bottom: 22px;
+    text-align: center;
+  }
+
+  .brand-block {
+    justify-items: center;
+  }
+
+  .brand-mark {
+    justify-content: center;
+  }
+
+  .tagline {
+    max-width: 30ch;
   }
 
   .hero-meta,
   .greeting-row {
-    justify-items: start;
-    justify-content: flex-start;
+    width: 100%;
+    min-width: 0;
+    justify-items: center;
+    justify-content: center;
   }
 
   .greeting-row h1 {
-    text-align: left;
+    text-align: center;
   }
 
   .workspace {
@@ -1640,29 +1759,43 @@ button:focus-visible {
   .sync-banner {
     align-items: stretch;
     flex-direction: column;
+    text-align: center;
+  }
+
+  .toolbar {
+    align-items: center;
+  }
+
+  .toolbar h2 {
+    font-size: clamp(1.45rem, 6vw, 1.95rem);
   }
 
   .toolbar-actions {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    justify-content: stretch;
-    width: 100%;
+    justify-content: center;
+    width: min(100%, 380px);
+    margin-inline: auto;
   }
 
   .toolbar-actions > * {
-    flex: 1 1 auto;
+    flex: 1 1 150px;
     min-width: 0;
-    width: 100%;
+    max-width: 180px;
+    width: auto;
+  }
+
+  .task-list-panel {
+    border-radius: 18px;
   }
 
   .task-list {
-    padding: 0 14px;
+    padding: 0 12px;
   }
 
   .task-row,
   .inline-add-row {
     grid-template-columns: 38px minmax(0, 1fr) 38px;
-    min-height: 56px;
+    min-height: 60px;
+    padding: 5px 0;
   }
 
   .inline-add-row {
@@ -1672,10 +1805,53 @@ button:focus-visible {
   .task-details {
     grid-template-columns: 1fr;
     margin-left: 0;
+    padding: 17px;
+  }
+
+  .task-title-area {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 34px;
+    align-items: center;
+    width: 100%;
+    column-gap: 5px;
+    row-gap: 5px;
+  }
+
+  .task-title-button {
+    grid-column: 1;
+  }
+
+  .edit-task {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .status-pill,
+  .timer-pill {
+    grid-column: 1 / -1;
+    justify-self: start;
   }
 
   .schedule-fields {
     grid-template-columns: 1fr;
+  }
+
+  .schedule-presets,
+  .duration-presets {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .chip-group-label {
+    grid-column: 1 / -1;
+    text-align: center;
+  }
+
+  .time-preset,
+  .duration-chip {
+    width: 100%;
+    padding: 0 7px;
   }
 
   .batch-entry {
@@ -1721,12 +1897,12 @@ button:focus-visible {
 
 @media (max-width: 520px) {
   .app-shell {
-    width: min(820px, calc(100% - 16px));
+    width: min(640px, calc(100% - 14px));
     padding: 14px 0 30px;
   }
 
   .hero {
-    gap: 18px;
+    gap: 16px;
   }
 
   .brand-mark {
@@ -1734,12 +1910,14 @@ button:focus-visible {
   }
 
   .tagline {
+    max-width: 25ch;
     font-size: 0.92rem;
   }
 
   .date-line {
     width: 100%;
-    justify-content: flex-start;
+    justify-content: center;
+    text-align: center;
   }
 
   #todayDate {
@@ -1751,12 +1929,17 @@ button:focus-visible {
   }
 
   .clock-time {
+    width: 100%;
     min-width: 0;
-    text-align: left;
+    font-size: 1rem;
+    text-align: center;
   }
 
   .greeting-row {
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 8px;
   }
 
   .greeting-row h1 {
@@ -1767,27 +1950,42 @@ button:focus-visible {
     gap: 12px;
   }
 
+  .toolbar-actions {
+    width: min(100%, 360px);
+  }
+
+  .toolbar-actions > * {
+    max-width: none;
+    min-height: 48px;
+  }
+
   .progress-summary {
-    padding: 15px 14px 14px;
+    justify-items: center;
+    padding: 17px 14px 15px;
+    text-align: center;
   }
 
   .progress-topline {
-    align-items: flex-start;
+    justify-content: center;
+    align-items: center;
     gap: 8px;
   }
 
   .progress-percent {
-    font-size: 1.45rem;
+    width: 100%;
+    font-size: 2.15rem;
+    text-align: center;
   }
 
   .task-list {
-    padding: 0 10px;
+    padding: 0 9px;
   }
 
   .task-row,
   .inline-add-row {
-    grid-template-columns: 40px minmax(0, 1fr) 40px;
-    gap: 6px;
+    grid-template-columns: 38px minmax(0, 1fr) 38px;
+    gap: 5px;
+    min-height: 64px;
   }
 
   .done-toggle,
@@ -1813,14 +2011,14 @@ button:focus-visible {
 
   .task-details {
     margin-bottom: 10px;
-    padding: 13px 11px;
+    padding: 14px 11px;
     border-radius: 12px;
   }
 
   .status-segment {
     gap: 4px;
     min-height: 40px;
-    font-size: 0.76rem;
+    font-size: 0.72rem;
   }
 
   .schedule-panel {
@@ -1834,17 +2032,35 @@ button:focus-visible {
   .time-preset,
   .duration-chip {
     min-height: 34px;
-    padding: 0 9px;
+    padding: 0 7px;
+  }
+
+  .schedule-presets,
+  .duration-presets {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .time-stepper {
+    grid-template-columns: 42px minmax(0, 1fr) 42px;
+  }
+
+  .time-display {
+    font-size: 0.82rem;
   }
 
   .editor-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px;
   }
 
   .task-delete-action,
   .done-edit-action {
-    flex: 1 1 calc(50% - 6px);
-    padding: 0 12px;
+    width: 100%;
+    min-width: 0;
+    gap: 5px;
+    padding: 0 8px;
+    font-size: 0.88rem;
   }
 
   .undo-toast {
