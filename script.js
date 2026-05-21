@@ -1,5 +1,6 @@
 const STORAGE_KEY = "planForToday.currentDay";
 const PREFS_KEY = "planForToday.preferences";
+const HEADLINE_KEY = "planForToday.headline";
 const STATUS_OPTIONS = [
   { value: "todo", label: "To do" },
   { value: "progress", label: "In progress" },
@@ -38,6 +39,7 @@ const state = {
   pendingExternalChange: false,
   pendingUndo: null,
   undoTimerId: null,
+  currentHeadline: "",
   prefs: {
     name: "",
   },
@@ -97,6 +99,7 @@ init();
 function init() {
   state.storageAvailable = testStorageAvailability();
   loadPrefs();
+  chooseNextHeadline();
   loadTasks();
   bindEvents();
   render();
@@ -415,12 +418,14 @@ function renderClock() {
   if (state.visualDateKey === currentDateKey) return;
   state.visualDateKey = currentDateKey;
   elements.todayDate.textContent = formatToday();
+  chooseNextHeadline();
   renderDailyHeadline();
   renderRolloverBanner();
 }
 
 function renderDailyHeadline() {
-  elements.planTitle.textContent = getDailyHeadline();
+  if (!state.currentHeadline) chooseNextHeadline();
+  elements.planTitle.textContent = state.currentHeadline;
 }
 
 function renderGreeting() {
@@ -1355,7 +1360,6 @@ function getTaskCard(taskId) {
 
 function checkDateRollover() {
   renderDateLine();
-  renderDailyHeadline();
   if (state.dateKey !== getDateKey()) renderRolloverBanner();
 }
 
@@ -1521,15 +1525,37 @@ function formatClock(date = new Date()) {
     .join(":");
 }
 
-function getDailyHeadline(dateKey = getDateKey()) {
-  const dayNumber = getDayNumber(dateKey);
-  return DAILY_HEADLINES[dayNumber % DAILY_HEADLINES.length];
+function chooseNextHeadline() {
+  const index = getNextHeadlineIndex();
+  state.currentHeadline = DAILY_HEADLINES[index];
+  saveHeadlineState(index);
 }
 
-function getDayNumber(dateKey) {
-  const [year, month, day] = dateKey.split("-").map(Number);
-  const date = new Date(year, month - 1, day);
-  return Math.floor(date.getTime() / 86400000);
+function getNextHeadlineIndex() {
+  const fallbackIndex = Math.floor(Math.random() * DAILY_HEADLINES.length);
+
+  try {
+    const stored = JSON.parse(localStorage.getItem(HEADLINE_KEY));
+    const previousIndex = Number.isInteger(stored?.index) ? stored.index : null;
+    if (previousIndex === null) return fallbackIndex;
+    return (previousIndex + 1) % DAILY_HEADLINES.length;
+  } catch {
+    return fallbackIndex;
+  }
+}
+
+function saveHeadlineState(index) {
+  try {
+    localStorage.setItem(
+      HEADLINE_KEY,
+      JSON.stringify({
+        index,
+        dateKey: getDateKey(),
+      })
+    );
+  } catch {
+    // Headline rotation is cosmetic, so the app can continue without storage.
+  }
 }
 
 function getDateWithTime(time, dateKey = state.dateKey) {
