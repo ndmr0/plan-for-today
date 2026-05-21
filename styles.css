@@ -1788,7 +1788,10 @@ button:focus-visible {
   }
 
   .toolbar h2 {
-    font-size: clamp(1.45rem, 6vw, 1.95rem);
+    font-size: clamp(1.34rem, 5vw, 1.72rem);
+    max-width: 18ch;
+    margin-inline: auto;
+    line-height: 1.08;
   }
 
   .toolbar-actions {
@@ -1927,12 +1930,12 @@ button:focus-visible {
   }
 
   .brand-mark {
-    font-size: 1.28rem;
+    font-size: 1.42rem;
   }
 
   .tagline {
     max-width: 25ch;
-    font-size: 0.92rem;
+    font-size: 0.9rem;
   }
 
   .date-line {
@@ -1957,18 +1960,36 @@ button:focus-visible {
   }
 
   .greeting-row {
-    display: grid;
-    grid-template-columns: 1fr;
-    justify-items: center;
-    gap: 8px;
+    display: inline-grid;
+    grid-template-columns: 40px minmax(0, auto);
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    max-width: 100%;
+    gap: 10px;
+    text-align: left;
+  }
+
+  .greeting-row > div {
+    min-width: 0;
+  }
+
+  .greeting-row .eyebrow {
+    text-align: left;
   }
 
   .greeting-row h1 {
-    font-size: clamp(1.34rem, 8vw, 2rem);
+    font-size: clamp(1.36rem, 6.2vw, 1.68rem);
+    line-height: 1.08;
+    text-align: left;
   }
 
   .toolbar {
     gap: 12px;
+  }
+
+  .toolbar h2 {
+    max-width: 16ch;
   }
 
   .toolbar-actions {
