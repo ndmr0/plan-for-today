@@ -23,7 +23,7 @@
             </span>
             <span>Plan for Today</span>
           </a>
-          <p class="tagline">Track today’s tasks, one by one. Simple. Clear.</p>
+          <p class="tagline">Plan your work. Finish one task at a time.</p>
         </div>
 
         <div class="hero-meta">
@@ -93,7 +93,7 @@
             <div class="progress-summary" id="progressPanel" hidden>
               <div class="progress-topline">
                 <div>
-                  <p class="progress-kicker">Daily progress</p>
+                  <p class="progress-kicker">Today's progress</p>
                   <p class="progress-meta" id="progressMeta">0 of 0 tasks complete</p>
                 </div>
                 <strong class="progress-percent" id="progressPercent">0%</strong>
@@ -105,13 +105,31 @@
             <div class="task-list" id="taskList"></div>
 
             <div class="empty-state" id="emptyState" role="button" tabindex="0" aria-label="Add your first task">
-              <div class="empty-stack" aria-hidden="true">
-                <span></span>
-                <span></span>
-                <span></span>
+              <div class="empty-landing-copy">
+                <div>
+                  <h2>What’s the one task you need to finish today?</h2>
+                  <p>Add it below. Then take it one step at a time.</p>
+                </div>
+                <div class="empty-greeting-card" aria-hidden="true">
+                  <span class="empty-wave">👋</span>
+                  <span>
+                    <strong>Hi, <span id="emptyGreetingName">hard worker</span></strong>
+                    <small>Let’s make today count.</small>
+                  </span>
+                </div>
               </div>
-              <h2>Start with one work task.</h2>
-              <p>Add what you need to finish today and check it off as you go.</p>
+              <div class="empty-add-shell" aria-hidden="true">
+                <span class="empty-add-check"></span>
+                <span class="empty-add-placeholder">Add your first task for today...</span>
+                <span class="empty-add-divider"></span>
+                <span class="primary-button empty-add-button">
+                  <svg class="app-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M12 5v14"></path>
+                    <path d="M5 12h14"></path>
+                  </svg>
+                  Add Task
+                </span>
+              </div>
             </div>
           </div>
         </section>

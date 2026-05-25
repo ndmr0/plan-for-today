@@ -463,6 +463,50 @@ button:disabled {
   box-shadow: 0 24px 70px rgba(67, 42, 86, 0.075), inset 0 1px 0 rgba(255, 255, 255, 0.86);
 }
 
+.empty-plan .workspace {
+  gap: 10px;
+  padding-top: 14px;
+}
+
+.empty-plan .hero {
+  padding-bottom: 34px;
+}
+
+.empty-plan .hero-meta .greeting-row {
+  display: none;
+}
+
+.empty-plan .toolbar {
+  display: none;
+}
+
+.empty-plan .task-list-panel {
+  display: grid;
+  gap: 0;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.empty-plan .task-list {
+  order: 2;
+  padding: 0;
+}
+
+.empty-plan .empty-state {
+  order: 1;
+}
+
+.capturing-first-task .empty-state {
+  padding-bottom: 18px;
+}
+
+.capturing-first-task .empty-add-shell {
+  display: none;
+}
+
 .progress-summary {
   display: grid;
   gap: 11px;
@@ -1352,17 +1396,37 @@ button:focus-visible {
   color: rgba(116, 107, 127, 0.68);
 }
 
+.empty-plan .inline-add-row {
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 16px;
+  min-height: 88px;
+  padding: 14px 18px;
+  border: 1px solid rgba(138, 80, 196, 0.24);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow:
+    0 18px 42px rgba(111, 53, 170, 0.13),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.empty-plan .inline-add-marker {
+  border-radius: 5px;
+}
+
+.empty-plan .inline-add-input {
+  font-size: 1.08rem;
+}
+
 .empty-state {
   display: grid;
-  justify-items: center;
-  gap: 6px;
-  padding: 34px 18px;
+  gap: 28px;
+  padding: 38px 0 0;
   border: 0;
   background: transparent;
   color: var(--ink);
   cursor: pointer;
-  text-align: center;
-  transition: background 160ms ease, color 160ms ease;
+  text-align: left;
+  transition: color 160ms ease;
 }
 
 .empty-state[hidden] {
@@ -1371,28 +1435,127 @@ button:focus-visible {
 
 .empty-state:hover,
 .empty-state:focus-visible {
-  background:
-    linear-gradient(90deg, rgba(138, 80, 196, 0.055), rgba(240, 103, 184, 0.035)),
-    rgba(255, 255, 255, 0.46);
   outline: 0;
 }
 
 .empty-state:focus-visible {
-  box-shadow: inset 0 0 0 3px rgba(240, 103, 184, 0.22);
+  border-radius: 16px;
+  box-shadow: 0 0 0 3px rgba(240, 103, 184, 0.18);
 }
 
 .empty-stack {
   display: none;
 }
 
-.empty-state h2 {
-  font-size: 1.2rem;
-  color: var(--ink);
+.empty-landing-copy {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 28px;
 }
 
-.empty-state p {
-  color: #62566f;
-  font-weight: 700;
+.empty-landing-copy h2 {
+  max-width: 13ch;
+  margin: 0;
+  color: var(--ink);
+  font-size: clamp(2.1rem, 6vw, 3.35rem);
+  font-weight: 900;
+  line-height: 0.96;
+  letter-spacing: 0;
+}
+
+.empty-landing-copy p {
+  margin: 14px 0 0;
+  color: #766d82;
+  font-size: 1.04rem;
+  font-weight: 720;
+}
+
+.empty-greeting-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 210px;
+}
+
+.empty-wave {
+  display: inline-grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 30% 24%, rgba(255, 255, 255, 0.88), transparent 44%),
+    var(--brand-soft);
+  box-shadow: 0 12px 30px rgba(138, 80, 196, 0.12);
+  font-size: 1.72rem;
+}
+
+.empty-greeting-card strong,
+.empty-greeting-card small {
+  display: block;
+}
+
+.empty-greeting-card strong {
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.empty-greeting-card small {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 720;
+}
+
+.empty-add-shell {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) 1px auto;
+  align-items: center;
+  gap: 16px;
+  min-height: 88px;
+  padding: 14px 18px;
+  border: 1px solid rgba(138, 80, 196, 0.2);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow:
+    0 18px 42px rgba(111, 53, 170, 0.13),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.empty-state:hover .empty-add-shell,
+.empty-state:focus-visible .empty-add-shell {
+  border-color: rgba(138, 80, 196, 0.38);
+  box-shadow:
+    0 22px 50px rgba(111, 53, 170, 0.17),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transform: translateY(-1px);
+}
+
+.empty-add-check {
+  width: 22px;
+  height: 22px;
+  border: 2px solid rgba(138, 80, 196, 0.24);
+  border-radius: 5px;
+  background: #fff;
+}
+
+.empty-add-placeholder {
+  color: #82778d;
+  font-size: 1.02rem;
+  font-weight: 760;
+  overflow-wrap: anywhere;
+}
+
+.empty-add-divider {
+  height: 46px;
+  background: rgba(138, 80, 196, 0.12);
+}
+
+.empty-add-button {
+  min-width: 148px;
 }
 
 .modal {
@@ -1811,6 +1974,54 @@ button:focus-visible {
     border-radius: 18px;
   }
 
+  .empty-plan .hero {
+    padding-bottom: 20px;
+  }
+
+  .empty-state {
+    gap: 22px;
+    padding-top: 18px;
+    text-align: center;
+  }
+
+  .empty-landing-copy {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 18px;
+  }
+
+  .empty-landing-copy h2 {
+    max-width: 16ch;
+    font-size: clamp(2rem, 8vw, 2.8rem);
+  }
+
+  .empty-landing-copy p {
+    max-width: 34ch;
+    margin-inline: auto;
+  }
+
+  .empty-greeting-card {
+    justify-content: center;
+    min-width: 0;
+  }
+
+  .empty-add-shell {
+    grid-template-columns: 30px minmax(0, 1fr);
+    gap: 13px;
+    min-height: 0;
+    padding: 16px;
+  }
+
+  .empty-add-divider {
+    display: none;
+  }
+
+  .empty-add-button {
+    grid-column: 1 / -1;
+    width: 100%;
+    min-height: 50px;
+  }
+
   .task-list {
     padding: 0 12px;
   }
@@ -1999,6 +2210,31 @@ button:focus-visible {
   .toolbar-actions > * {
     max-width: none;
     min-height: 48px;
+  }
+
+  .empty-state {
+    padding-top: 10px;
+  }
+
+  .empty-landing-copy h2 {
+    max-width: 15ch;
+    font-size: clamp(1.8rem, 9.2vw, 2.35rem);
+    line-height: 1.02;
+  }
+
+  .empty-landing-copy p {
+    font-size: 0.96rem;
+  }
+
+  .empty-wave {
+    width: 50px;
+    height: 50px;
+    font-size: 1.45rem;
+  }
+
+  .empty-add-shell,
+  .empty-plan .inline-add-row {
+    padding: 14px;
   }
 
   .progress-summary {

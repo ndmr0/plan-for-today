@@ -51,6 +51,7 @@ const elements = {
   planTitle: document.querySelector("#planTitle"),
   greetingText: document.querySelector("#greetingText"),
   greetingNameText: document.querySelector("#greetingNameText"),
+  emptyGreetingName: document.querySelector("#emptyGreetingName"),
   editGreeting: document.querySelector("#editGreeting"),
   openAddTask: document.querySelector("#openAddTask"),
   taskModal: document.querySelector("#taskModal"),
@@ -431,6 +432,7 @@ function renderDailyHeadline() {
 function renderGreeting() {
   const name = state.prefs.name || "hard worker";
   elements.greetingNameText.textContent = name;
+  if (elements.emptyGreetingName) elements.emptyGreetingName.textContent = name;
 }
 
 function renderRolloverBanner() {
@@ -458,7 +460,9 @@ function announce(message) {
 
 function renderTasks() {
   elements.taskList.innerHTML = "";
-  elements.emptyState.hidden = state.tasks.length > 0 || state.isAddingInline;
+  document.body.classList.toggle("empty-plan", state.tasks.length === 0);
+  document.body.classList.toggle("capturing-first-task", state.tasks.length === 0 && state.isAddingInline);
+  elements.emptyState.hidden = state.tasks.length > 0;
   elements.clearTasks.hidden = state.tasks.length === 0;
   renderProgress();
 
