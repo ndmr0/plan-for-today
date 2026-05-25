@@ -32,40 +32,11 @@
             <span class="date-divider" aria-hidden="true"></span>
             <span class="clock-time" id="clockTime"></span>
           </p>
-          <div class="greeting-row">
-            <button class="icon-button greeting-edit" id="editGreeting" type="button" aria-label="Edit greeting name" title="Edit greeting">
-              <svg class="app-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path d="M12 20h9"></path>
-                <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"></path>
-              </svg>
-            </button>
-            <div>
-              <p class="eyebrow">Today</p>
-              <h1 id="greetingText">Hi, <span id="greetingNameText">hard worker</span> <span aria-hidden="true">👋</span></h1>
-            </div>
-          </div>
         </div>
       </header>
 
       <main class="main-grid">
-        <section class="workspace" aria-labelledby="planTitle">
-          <div class="toolbar">
-            <div>
-              <p class="eyebrow">Your stack</p>
-              <h2 id="planTitle">Build momentum today</h2>
-            </div>
-            <div class="toolbar-actions">
-              <button class="ghost-button" id="clearTasks" type="button" hidden>Clear today</button>
-              <button class="primary-button" id="openAddTask" type="button">
-                <svg class="app-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                  <path d="M12 5v14"></path>
-                  <path d="M5 12h14"></path>
-                </svg>
-                Add
-              </button>
-            </div>
-          </div>
-
+        <section class="workspace" aria-label="Today task list">
           <div class="rollover-banner" id="rolloverBanner" hidden>
             <div>
               <strong>A new day is here.</strong>
@@ -104,32 +75,17 @@
             </div>
             <div class="task-list" id="taskList"></div>
 
-            <div class="empty-state" id="emptyState" role="button" tabindex="0" aria-label="Add your first task">
-              <div class="empty-landing-copy">
-                <div>
-                  <h2>What’s the one task you need to finish today?</h2>
-                  <p>Add it below. Then take it one step at a time.</p>
-                </div>
-                <div class="empty-greeting-card" aria-hidden="true">
-                  <span class="empty-wave">👋</span>
-                  <span>
-                    <strong>Hi, <span id="emptyGreetingName">hard worker</span></strong>
-                    <small>Let’s make today count.</small>
-                  </span>
-                </div>
-              </div>
-              <div class="empty-add-shell" aria-hidden="true">
-                <span class="empty-add-check"></span>
-                <span class="empty-add-placeholder">Add your first task for today...</span>
-                <span class="empty-add-divider"></span>
-                <span class="primary-button empty-add-button">
-                  <svg class="app-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                    <path d="M12 5v14"></path>
-                    <path d="M5 12h14"></path>
-                  </svg>
-                  Add Task
-                </span>
-              </div>
+            <div class="clear-tasks-footer" id="clearTasksFooter" hidden>
+              <button class="clear-tasks-button" id="clearTasks" type="button">
+                <svg class="app-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M3 6h18"></path>
+                  <path d="M8 6V4h8v2"></path>
+                  <path d="M6 6l1 15h10l1-15"></path>
+                  <path d="M10 11v6"></path>
+                  <path d="M14 11v6"></path>
+                </svg>
+                Clear today’s tasks
+              </button>
             </div>
           </div>
         </section>

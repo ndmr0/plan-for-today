@@ -66,6 +66,7 @@ const elements = {
   cancelTask: document.querySelector("#cancelTask"),
   readyForToday: document.querySelector("#readyForToday"),
   clearTasks: document.querySelector("#clearTasks"),
+  clearTasksFooter: document.querySelector("#clearTasksFooter"),
   progressPanel: document.querySelector("#progressPanel"),
   progressTrack: document.querySelector("#progressTrack"),
   progressFill: document.querySelector("#progressFill"),
@@ -110,9 +111,9 @@ function init() {
 }
 
 function bindEvents() {
-  elements.openAddTask.addEventListener("click", startInlineAdd);
-  elements.emptyState.addEventListener("click", startInlineAdd);
-  elements.emptyState.addEventListener("keydown", handleEmptyStateKeydown);
+  elements.openAddTask?.addEventListener("click", startInlineAdd);
+  elements.emptyState?.addEventListener("click", startInlineAdd);
+  elements.emptyState?.addEventListener("keydown", handleEmptyStateKeydown);
   elements.closeTaskModal.addEventListener("click", closeTaskModal);
   elements.cancelTask.addEventListener("click", closeTaskModal);
   elements.readyForToday.addEventListener("click", closeTaskModal);
@@ -128,7 +129,7 @@ function bindEvents() {
   elements.undoDelete.addEventListener("click", undoLastDelete);
   window.addEventListener("storage", handleStorageEvent);
 
-  elements.clearTasks.addEventListener("click", () => {
+  elements.clearTasks?.addEventListener("click", () => {
     if (!state.tasks.length) return;
     openConfirm(() => {
       clearUndoToast();
@@ -153,9 +154,9 @@ function bindEvents() {
     pendingConfirmAction = null;
   });
 
-  elements.editGreeting.addEventListener("click", editGreeting);
-  elements.greetingNameText.addEventListener("blur", saveGreetingFromInlineEdit);
-  elements.greetingNameText.addEventListener("keydown", handleGreetingKeydown);
+  elements.editGreeting?.addEventListener("click", editGreeting);
+  elements.greetingNameText?.addEventListener("blur", saveGreetingFromInlineEdit);
+  elements.greetingNameText?.addEventListener("keydown", handleGreetingKeydown);
 
   elements.startNewDay.addEventListener("click", requestStartFreshDay);
 }
@@ -202,11 +203,6 @@ function addTask(title) {
 }
 
 function startInlineAdd() {
-  if (state.isAddingInline) {
-    const input = elements.taskList.querySelector(".inline-add-input");
-    input?.focus();
-    return;
-  }
   state.isAddingInline = true;
   renderTasks();
   requestAnimationFrame(() => {
@@ -217,7 +213,11 @@ function startInlineAdd() {
 
 function closeInlineAdd() {
   state.isAddingInline = false;
-  renderTasks();
+  const input = elements.taskList.querySelector(".inline-add-input");
+  if (input) {
+    input.value = "";
+    input.blur();
+  }
 }
 
 function saveInlineTask(input) {
@@ -426,12 +426,13 @@ function renderClock() {
 
 function renderDailyHeadline() {
   if (!state.currentHeadline) chooseNextHeadline();
+  if (!elements.planTitle) return;
   elements.planTitle.textContent = state.currentHeadline;
 }
 
 function renderGreeting() {
   const name = state.prefs.name || "hard worker";
-  elements.greetingNameText.textContent = name;
+  if (elements.greetingNameText) elements.greetingNameText.textContent = name;
   if (elements.emptyGreetingName) elements.emptyGreetingName.textContent = name;
 }
 
@@ -460,19 +461,17 @@ function announce(message) {
 
 function renderTasks() {
   elements.taskList.innerHTML = "";
-  document.body.classList.toggle("empty-plan", state.tasks.length === 0);
-  document.body.classList.toggle("capturing-first-task", state.tasks.length === 0 && state.isAddingInline);
-  elements.emptyState.hidden = state.tasks.length > 0;
-  elements.clearTasks.hidden = state.tasks.length === 0;
+  document.body.classList.remove("empty-plan", "capturing-first-task");
+  if (elements.emptyState) elements.emptyState.hidden = true;
+  if (elements.clearTasks) elements.clearTasks.hidden = state.tasks.length === 0;
+  if (elements.clearTasksFooter) elements.clearTasksFooter.hidden = state.tasks.length === 0;
   renderProgress();
 
   state.tasks.forEach((task) => {
     elements.taskList.appendChild(createTaskCard(task));
   });
 
-  if (state.isAddingInline) {
-    elements.taskList.appendChild(createInlineAddRow());
-  }
+  elements.taskList.appendChild(createInlineAddRow());
 }
 
 function renderProgress() {
@@ -504,6 +503,7 @@ function createIcon(name) {
     clock: ["M12 7v5l3 2", "M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"],
     edit: ["M12 20h9", "M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"],
     hourglass: ["M6 3h12", "M6 21h12", "M7 3c0 5 3.5 6 5 9-1.5 3-5 4-5 9", "M17 3c0 5-3.5 6-5 9 1.5 3 5 4 5 9"],
+    plus: ["M12 5v14", "M5 12h14"],
     refresh: ["M3 12a9 9 0 0 1 15.1-6.6L21 8", "M21 3v5h-5", "M21 12a9 9 0 0 1-15.1 6.6L3 16", "M3 21v-5h5"],
     trash: ["M3 6h18", "M8 6V4h8v2", "M6 6l1 15h10l1-15", "M10 11v6", "M14 11v6"],
   };
@@ -533,6 +533,11 @@ function createInlineAddRow() {
   input.placeholder = "Type a task...";
   input.autocomplete = "off";
 
+  const addButton = document.createElement("button");
+  addButton.className = "primary-button inline-add-button";
+  addButton.type = "submit";
+  addButton.append(createIcon("plus"), document.createTextNode("Add Task"));
+
   row.addEventListener("submit", (event) => {
     event.preventDefault();
     saveInlineTask(input);
@@ -551,7 +556,7 @@ function createInlineAddRow() {
     }
   });
 
-  row.append(marker, input);
+  row.append(marker, input, addButton);
   return row;
 }
 
