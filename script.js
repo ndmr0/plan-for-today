@@ -1291,42 +1291,41 @@ function getTaskTiming(task) {
       hasSchedule: true,
       isValid: true,
       state: "done-time",
-      label: `${formatTime(start)} - ${formatTime(end)}`,
-      ariaLabel: `Done. Scheduled from ${formatTime(start)} to ${formatTime(end)}.`,
+      label: `${formatTime(end)} / Done`,
+      ariaLabel: `Done. Deadline was ${formatTime(end)}.`,
     };
   }
 
   const now = new Date();
-  if (now < start) {
-    return {
-      hasSchedule: true,
-      isValid: true,
-      state: "scheduled",
-      label: `${formatTime(start)} - ${formatTime(end)}`,
-      ariaLabel: `Scheduled from ${formatTime(start)} to ${formatTime(end)}.`,
-    };
-  }
-
   if (now > end) {
     return {
       hasSchedule: true,
       isValid: true,
       state: "late",
-      label: `Late · due ${formatTime(end)}`,
-      ariaLabel: `Late. Due at ${formatTime(end)}.`,
+      label: `${formatTime(end)} / Late`,
+      ariaLabel: `Late. Deadline was ${formatTime(end)}.`,
     };
   }
 
   const remaining = end - now;
+  if (now < start) {
+    return {
+      hasSchedule: true,
+      isValid: true,
+      state: "scheduled",
+      label: `${formatTime(end)} / ${formatDuration(remaining)} left`,
+      ariaLabel: `Deadline ${formatTime(end)}. ${formatDuration(remaining)} remaining.`,
+    };
+  }
+
   const stateName = remaining <= 10 * 60 * 1000 ? "urgent" : remaining <= 30 * 60 * 1000 ? "warning" : "active";
-  const label = stateName === "active" ? `Now · ${formatDuration(remaining)} left` : `${formatDuration(remaining)} left`;
   const ariaPrefix = stateName === "urgent" ? "Urgent" : stateName === "warning" ? "Due soon" : "Now";
   return {
     hasSchedule: true,
     isValid: true,
     state: stateName,
-    label,
-    ariaLabel: `${ariaPrefix}. ${formatDuration(remaining)} left. Due at ${formatTime(end)}.`,
+    label: `${formatTime(end)} / ${formatDuration(remaining)} left`,
+    ariaLabel: `${ariaPrefix}. Deadline ${formatTime(end)}. ${formatDuration(remaining)} remaining.`,
   };
 }
 
