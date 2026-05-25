@@ -782,16 +782,29 @@ button:disabled {
 }
 
 .timer-pill {
+  --timer-accent: var(--brand);
+  --timer-strong: var(--brand-strong);
+  --timer-soft: rgba(138, 80, 196, 0.1);
+  --timer-border: rgba(138, 80, 196, 0.2);
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  min-height: 26px;
-  padding: 0 9px;
+  gap: 6px;
+  max-width: 100%;
+  min-height: 30px;
+  padding: 3px 5px 3px 8px;
+  border: 1px solid var(--timer-border);
   border-radius: 999px;
-  background: rgba(138, 80, 196, 0.08);
-  color: #5f4d75;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0.58)),
+    var(--timer-soft);
+  color: var(--timer-strong);
   font-size: 0.78rem;
-  font-weight: 760;
+  font-weight: 820;
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.86),
+    0 5px 14px rgba(67, 42, 86, 0.06);
 }
 
 .status-pill {
@@ -859,37 +872,104 @@ button:disabled {
 .timer-pill .app-icon {
   width: 13px;
   height: 13px;
-  opacity: 0.76;
+  color: var(--timer-accent);
+  opacity: 0.9;
   stroke-width: 2.2;
 }
 
-.timer-pill-text {
+.timer-pill-text,
+.timer-pill-deadline,
+.timer-pill-separator,
+.timer-pill-remaining {
   line-height: 1;
 }
 
+.timer-pill-text,
+.timer-pill-deadline {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.timer-pill-deadline {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+}
+
+.timer-pill-separator {
+  margin: 0 -1px;
+  color: currentColor;
+  font-weight: 900;
+  opacity: 0.42;
+}
+
+.timer-pill-remaining {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 22px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: var(--timer-accent);
+  color: #fff;
+  font-weight: 900;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 4px 10px rgba(67, 42, 86, 0.1);
+}
+
+.timer-pill.scheduled {
+  --timer-accent: var(--brand);
+  --timer-strong: #5c3582;
+  --timer-soft: rgba(138, 80, 196, 0.11);
+  --timer-border: rgba(138, 80, 196, 0.22);
+}
+
 .timer-pill.active {
-  background: var(--success-bg);
-  color: var(--success);
+  --timer-accent: #3f8f63;
+  --timer-strong: #2e6f4b;
+  --timer-soft: rgba(79, 155, 115, 0.13);
+  --timer-border: rgba(79, 155, 115, 0.24);
 }
 
 .timer-pill.warning {
-  background: var(--warning-bg);
-  color: var(--warning);
+  --timer-accent: #9a6400;
+  --timer-strong: #7a4f00;
+  --timer-soft: rgba(255, 196, 87, 0.22);
+  --timer-border: rgba(176, 106, 0, 0.28);
 }
 
 .timer-pill.urgent {
-  background: var(--urgent-bg);
-  color: var(--urgent);
+  --timer-accent: #b34a1f;
+  --timer-strong: #8f3815;
+  --timer-soft: rgba(255, 137, 86, 0.18);
+  --timer-border: rgba(168, 68, 23, 0.28);
 }
 
 .timer-pill.late {
-  background: var(--late-bg);
-  color: var(--late);
+  --timer-accent: #b52243;
+  --timer-strong: #911b36;
+  --timer-soft: rgba(255, 110, 145, 0.17);
+  --timer-border: rgba(181, 34, 67, 0.28);
 }
 
 .timer-pill.done-time {
-  background: #f1eef4;
-  color: rgba(90, 78, 101, 0.72);
+  --timer-accent: #72707a;
+  --timer-strong: #625d6b;
+  --timer-soft: rgba(111, 104, 122, 0.1);
+  --timer-border: rgba(111, 104, 122, 0.18);
+}
+
+.timer-pill.done-time .timer-pill-remaining {
+  background: #ece8f1;
+  color: #625d6b;
+  box-shadow: inset 0 0 0 1px rgba(111, 104, 122, 0.1);
+}
+
+.task-item.invalid-time .timer-pill {
+  --timer-accent: #b52243;
+  --timer-strong: #911b36;
+  --timer-soft: rgba(255, 110, 145, 0.16);
+  --timer-border: rgba(181, 34, 67, 0.3);
 }
 
 .task-details {

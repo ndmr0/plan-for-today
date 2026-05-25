@@ -678,10 +678,30 @@ function createStatusMark(status) {
 
 function setTimerPillContent(pill, timing) {
   pill.textContent = "";
-  const text = document.createElement("span");
-  text.className = "timer-pill-text";
-  text.textContent = timing.label;
-  pill.append(createIcon("clock"), text);
+  const [deadline, remaining] = timing.label.split(" / ");
+  pill.appendChild(createIcon("clock"));
+
+  if (!remaining) {
+    const text = document.createElement("span");
+    text.className = "timer-pill-text";
+    text.textContent = timing.label;
+    pill.appendChild(text);
+    return;
+  }
+
+  const deadlineText = document.createElement("span");
+  deadlineText.className = "timer-pill-deadline";
+  deadlineText.textContent = deadline;
+
+  const separator = document.createElement("span");
+  separator.className = "timer-pill-separator";
+  separator.textContent = "/";
+
+  const remainingText = document.createElement("span");
+  remainingText.className = "timer-pill-remaining";
+  remainingText.textContent = remaining;
+
+  pill.append(deadlineText, separator, remainingText);
 }
 
 function createEditButton(task) {
