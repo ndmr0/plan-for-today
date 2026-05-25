@@ -218,6 +218,7 @@ function closeInlineAdd() {
     input.value = "";
     input.blur();
   }
+  if (!state.tasks.length) renderTasks();
 }
 
 function saveInlineTask(input) {
@@ -461,17 +462,21 @@ function announce(message) {
 
 function renderTasks() {
   elements.taskList.innerHTML = "";
-  document.body.classList.remove("empty-plan", "capturing-first-task");
-  if (elements.emptyState) elements.emptyState.hidden = true;
-  if (elements.clearTasks) elements.clearTasks.hidden = state.tasks.length === 0;
-  if (elements.clearTasksFooter) elements.clearTasksFooter.hidden = state.tasks.length === 0;
+  const isEmpty = state.tasks.length === 0;
+  document.body.classList.toggle("empty-plan", isEmpty);
+  document.body.classList.toggle("capturing-first-task", isEmpty && state.isAddingInline);
+  if (elements.emptyState) elements.emptyState.hidden = !isEmpty;
+  if (elements.clearTasks) elements.clearTasks.hidden = isEmpty;
+  if (elements.clearTasksFooter) elements.clearTasksFooter.hidden = isEmpty;
   renderProgress();
 
   state.tasks.forEach((task) => {
     elements.taskList.appendChild(createTaskCard(task));
   });
 
-  elements.taskList.appendChild(createInlineAddRow());
+  if (!isEmpty || state.isAddingInline) {
+    elements.taskList.appendChild(createInlineAddRow());
+  }
 }
 
 function renderProgress() {

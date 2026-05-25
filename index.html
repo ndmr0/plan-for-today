@@ -75,6 +75,34 @@
             </div>
             <div class="task-list" id="taskList"></div>
 
+            <div class="empty-state" id="emptyState" role="button" tabindex="0" aria-label="Add your first task">
+              <div class="empty-landing-copy">
+                <div>
+                  <h2>What’s the one task you need to finish today?</h2>
+                  <p>Add it below. Then take it one step at a time.</p>
+                </div>
+                <div class="empty-greeting-card" aria-hidden="true">
+                  <span class="empty-wave">👋</span>
+                  <span>
+                    <strong>Hi, <span id="emptyGreetingName">hard worker</span></strong>
+                    <small>Let’s make today count.</small>
+                  </span>
+                </div>
+              </div>
+              <div class="empty-add-shell" aria-hidden="true">
+                <span class="empty-add-check"></span>
+                <span class="empty-add-placeholder">Add your first task for today...</span>
+                <span class="empty-add-divider"></span>
+                <span class="primary-button empty-add-button">
+                  <svg class="app-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M12 5v14"></path>
+                    <path d="M5 12h14"></path>
+                  </svg>
+                  Add Task
+                </span>
+              </div>
+            </div>
+
             <div class="clear-tasks-footer" id="clearTasksFooter" hidden>
               <button class="clear-tasks-button" id="clearTasks" type="button">
                 <svg class="app-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">

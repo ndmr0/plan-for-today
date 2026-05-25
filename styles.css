@@ -468,6 +468,10 @@ button:disabled {
   padding-top: 14px;
 }
 
+.empty-plan .app-shell {
+  width: min(900px, calc(100% - 40px));
+}
+
 .empty-plan .hero {
   padding-bottom: 34px;
 }
@@ -1536,7 +1540,7 @@ button:focus-visible {
 }
 
 .empty-plan .inline-add-row {
-  grid-template-columns: 34px minmax(0, 1fr);
+  grid-template-columns: 34px minmax(0, 1fr) auto;
   gap: 16px;
   min-height: 88px;
   padding: 14px 18px;
